@@ -1,0 +1,275 @@
+/* =============================================
+   HERO SWIPER (Home Page)
+   ============================================= */
+
+.hero-swiper-wrapper .swiper-button-next,
+.hero-swiper-wrapper .swiper-button-prev {
+  width: 36px !important;
+  height: 36px !important;
+  background-color: white;
+  border-radius: 50%;
+  color: #16a34a !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}/* =============================================
+   HERO SWIPER (Home Page)
+   ============================================= */
+
+.hero-swiper-wrapper .swiper-button-next,
+.hero-swiper-wrapper .swiper-button-prev {
+  width: 36px !important;
+  height: 36px !important;
+  background-color: white;
+  border-radius: 50%;
+  color: #16a34a !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.hero-swiper-wrapper .swiper-button-next:hover,
+.hero-swiper-wrapper .swiper-button-prev:hover {
+  background-color: #16a34a;
+  color: white !important;
+}
+
+.hero-swiper-wrapper .swiper-button-next::after,
+.hero-swiper-wrapper .swiper-button-prev::after {
+  font-size: 13px !important;
+  font-weight: 700;
+}
+
+.hero-swiper-wrapper .swiper-button-next {
+  right: 12px !important;
+}
+.hero-swiper-wrapper .swiper-button-prev {
+  left: 12px !important;
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 640px) {
+  .hero-swiper-wrapper .swiper-button-next,
+  .hero-swiper-wrapper .swiper-button-prev {
+    display: none !important;
+  }
+}
+
+/* Hero pagination dots — inside swiper at bottom */
+.hero-swiper-wrapper .swiper-pagination {
+  bottom: 12px !important;
+  position: absolute !important;
+}
+
+.hero-swiper-wrapper .swiper-pagination-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  opacity: 1 !important;
+  border-radius: 50% !important;
+  transition: all 0.3s ease !important;
+}
+
+.hero-swiper-wrapper .swiper-pagination-bullet-active {
+  width: 24px !important;
+  height: 8px !important;
+  background-color: white !important;
+  border-radius: 999px !important;
+}
+
+
+/* =============================================
+   PRODUCT DETAILS SWIPER
+   ============================================= */
+
+.product-swiper-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Main swiper — no overflow issues */
+.product-main-swiper {
+  width: 100%;
+  border-radius: 16px;
+}
+
+/* Dots rendered outside swiper — below main image */
+.product-custom-pagination {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 10px 0 6px !important;
+}
+
+.product-custom-pagination .swiper-pagination-bullet {
+  width: 7px !important;
+  height: 7px !important;
+  background-color: #d1d5db !important;
+  opacity: 1 !important;
+  border-radius: 50% !important;
+  transition: all 0.3s ease !important;
+  display: inline-block !important;
+}
+
+.product-custom-pagination .swiper-pagination-bullet-active {
+  width: 20px !important;
+  height: 7px !important;
+  background-color: #16a34a !important;
+  border-radius: 999px !important;
+}
+
+/* Thumbnails swiper strip */
+.product-thumbs-swiper {
+  width: 100%;
+  padding: 4px 0 !important;
+}
+
+/* Each thumbnail slide — auto width */
+.product-thumb-slide {
+  width: auto !important;
+}
+
+.product-thumb-item {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #e5e7eb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #f9fafb;
+  flex-shrink: 0;
+}
+
+.product-thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-thumb-item:hover {
+  border-color: #16a34a;
+}
+
+/* Active thumbnail — Swiper adds this class */
+.product-thumbs-swiper .swiper-slide-thumb-active .product-thumb-item {
+  border-color: #16a34a !important;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+}
+
+/* Responsive thumbnails */
+@media (max-width: 480px) {
+  .product-thumb-item {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+.hero-swiper-wrapper .swiper-button-next:hover,
+.hero-swiper-wrapper .swiper-button-prev:hover {
+  background-color: #16a34a;
+  color: white !important;
+}
+
+.hero-swiper-wrapper .swiper-button-next::after,
+.hero-swiper-wrapper .swiper-button-prev::after {
+  font-size: 13px !important;
+  font-weight: 700;
+}
+
+.hero-swiper-wrapper .swiper-button-next {
+  right: 12px !important;
+}
+
+.hero-swiper-wrapper .swiper-button-prev {
+  left: 12px !important;
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 640px) {
+  .hero-swiper-wrapper .swiper-button-next,
+  .hero-swiper-wrapper .swiper-button-prev {
+    display: none !important;
+  }
+}
+
+/* Hero pagination dots */
+.hero-swiper-wrapper .swiper-pagination {
+  bottom: 10px !important;
+  position: absolute !important;
+}
+
+.hero-swiper-wrapper .swiper-pagination-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  opacity: 1 !important;
+  border-radius: 50% !important;
+  transition: all 0.3s ease !important;
+}
+
+.hero-swiper-wrapper .swiper-pagination-bullet-active {
+  width: 24px !important;
+  height: 8px !important;
+  background-color: white !important;
+  border-radius: 999px !important;
+}
+
+
+/* =============================================
+   PRODUCT DETAILS SWIPER
+   ============================================= */
+
+.product-swiper-wrapper .swiper-pagination {
+  position: static !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  padding: 12px 8px 4px !important;
+  transform: none !important;
+}
+
+.product-thumb-bullet {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 64px !important;
+  height: 64px !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  opacity: 1 !important;
+  border: 2px solid #e5e7eb !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  background-color: #f9fafb !important;
+  flex-shrink: 0 !important;
+}
+
+.product-thumb-bullet img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  opacity: 1 !important;
+}
+
+.product-thumb-bullet:hover {
+  border-color: #16a34a !important;
+  transform: scale(1.05) !important;
+}
+
+/* Active thumbnail */
+.product-swiper-wrapper .swiper-pagination-bullet-active.product-thumb-bullet {
+  border-color: #16a34a !important;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2) !important;
+  transform: scale(1.08) !important;
+}
+
+/* Responsive thumbnails */
+@media (max-width: 480px) {
+  .product-thumb-bullet {
+    width: 52px !important;
+    height: 52px !important;
+  }
+}
