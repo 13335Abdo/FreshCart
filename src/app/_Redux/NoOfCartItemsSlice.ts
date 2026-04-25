@@ -39,15 +39,13 @@ export const numberOfCart = createSlice({
 
             prev.isLoading = false
 
-            console.log("yyyyy", y);
-
             prev.cartId = y.payload.logUser?.cartId ?? ""
 
             prev.noOfcart = y.payload.logUser?.numOfCartItems ?? 0
 
-            prev.allProdects = y.payload.allProdectsInCart?.data.products ?? []
+            prev.allProdects = y.payload.allProdectsInCart?.data?.products ?? []
 
-            prev.totalPriceOfCart=y.payload.logUser?.data.totalCartPrice ?? 0
+            prev.totalPriceOfCart = y.payload.logUser?.data?.totalCartPrice ?? 0
 
 
 

@@ -58,10 +58,14 @@ export default function Navbar() {
     const isLoading = useSelector((store: storeTpe) => store.changeNoOFCartItem.isLoading);
     const rounder = useSelector((store: storeTpe) => store.changeNoOFWithListItem.isLoading);
 
+    const session = useSession();
+    const isLoggedIn = !!session.data;
+
     useEffect(() => {
+        if (session.status !== "authenticated") return;
         dispatch(p());
         dispatch(y());
-    }, [dispatch]);
+    }, [dispatch, session.status]);
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -81,9 +85,6 @@ export default function Navbar() {
     function handleLogout() {
         signOut({ redirect: true, callbackUrl: "/login" });
     }
-
-    const session = useSession();
-    const isLoggedIn = !!session.data;
 
     return (
         <>

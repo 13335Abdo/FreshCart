@@ -37,7 +37,6 @@ export const numberOfWithList = createSlice({
         })
         builder.addCase(y.fulfilled, function (prev, y) {
             prev.isLoading = false
-            console.log("yyyyy", y);
 
             prev.noOfWithList = y.payload.withListUser?.count ?? 0 
 
