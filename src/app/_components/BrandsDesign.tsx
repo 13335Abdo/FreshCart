@@ -3,7 +3,7 @@ import { FaArrowRightLong } from 'react-icons/fa6'
 
 export default function BrandsDesign({ response , isCallAllCat = false }:{response:brands,isCallAllCat:boolean}) {
     return (
-        <div className='w-50 h-72 group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-white shadow-md rounded-2xl p-3 flex flex-col justify-between'>
+        <div className='w-50 h-72 group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl bg-white shadow-md rounded-2xl p-3 flex flex-col justify-between m-auto'>
             {/* حاوية الصورة */}
             <div className='w-full h-48 bg-[#F9FAFB] rounded-xl flex justify-center items-center overflow-hidden p-3'>
                 <img

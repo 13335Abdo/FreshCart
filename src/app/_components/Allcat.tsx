@@ -6,7 +6,7 @@ export default function Allcat() {
         <>
             <div className='w-full flex justify-center my-5 px-10 flex-col gap-5'>
                 <div className='flex  gap-1'>
-                    <Link className=' opacity-50 hover:opacity-100 text-[14px] font-medium' href={"/home"}>Home </Link>
+                    <Link className=' opacity-50 hover:opacity-100 text-[14px] font-medium' href={"/"}>Home </Link>
                     <p className='font-medium text-[14px]'> / My Orders</p>
                 </div>
                 <div className='flex justify-between items-center'>
@@ -24,7 +24,7 @@ export default function Allcat() {
                         </div>
                     </div>
 
-                    <Link className='text-[#16A34A] text-[14px] font-medium' href={"/home"}>Continue Shopping </Link>
+                    <Link className='text-[#16A34A] text-[14px] font-medium' href={"/"}>Continue Shopping </Link>
                 </div>
             </div>
 

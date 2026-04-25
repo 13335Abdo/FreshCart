@@ -19,6 +19,7 @@
 .hero-swiper-wrapper .swiper-button-prev {
   width: 36px !important;
   height: 36px !important;
+  padding: 7px !important;
   background-color: white;
   border-radius: 50%;
   color: #16a34a !important;

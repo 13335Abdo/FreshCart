@@ -10,7 +10,7 @@ export default function TitleOfAllThing() {
         <>
             <div className='bg-linear-to-r from-[#7F22FE] to-[#C27AFF] w-full h-60 flex justify-center px-10 flex-col gap-5'>
                 <div className='flex  gap-1'>
-                    <Link className='text-white opacity-50 hover:opacity-100 text-[14px] font-medium' href={"/home"}>Home </Link>
+                    <Link className='text-white opacity-50 hover:opacity-100 text-[14px] font-medium' href={"/"}>Home </Link>
                     <p className='text-white font-medium text-[14px]'> / Checkout</p>
                 </div>
                 <div className='flex items-center gap-3'>

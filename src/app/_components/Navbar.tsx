@@ -32,7 +32,8 @@ import {
     MenuIcon,
     SearchIcon,
     ShoppingCartIcon,
-    XIcon
+    XIcon,
+    ChevronDownIcon,
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -52,6 +53,7 @@ export default function Navbar() {
     const dispatch = useDispatch<AppDispatch>();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [categoriesOpen, setCategoriesOpen] = useState(false);
 
     const noOfcart = useSelector((store: storeTpe) => store.changeNoOFCartItem.noOfcart);
     const noOfWithList = useSelector((store: storeTpe) => store.changeNoOFWithListItem.noOfWithList);
@@ -73,7 +75,6 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    // Close mobile menu on resize to desktop
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 1024) setMobileOpen(false);
@@ -89,13 +90,13 @@ export default function Navbar() {
     return (
         <>
             <header
-                className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled
+                className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
+                    scrolled
                         ? "bg-white shadow-md"
                         : "bg-white/90 backdrop-blur-md shadow-sm"
-                    }`}
+                }`}
             >
                 <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-4 lg:px-6">
-
                     {/* Logo */}
                     <Link href="/" className="flex shrink-0 items-center">
                         <img src={logo.src} alt="FreshCart" className="h-8 w-auto" />
@@ -113,11 +114,11 @@ export default function Navbar() {
                         </button>
                     </div>
 
-                    {/* Desktop Nav */}
+                    {/* Desktop Navigation - تم استعادة جميع العناصر */}
                     <nav className="hidden lg:block">
                         <NavigationMenu>
                             <NavigationMenuList className="flex items-center gap-0.5">
-
+                                {/* Home */}
                                 <NavigationMenuItem>
                                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                                         <Link href="/" className="text-sm font-medium text-gray-700 hover:text-green-600">
@@ -126,6 +127,7 @@ export default function Navbar() {
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
 
+                                {/* Categories Dropdown */}
                                 <NavigationMenuItem>
                                     <NavigationMenuTrigger className="text-sm font-medium text-gray-700 hover:text-green-600">
                                         Categories
@@ -146,6 +148,7 @@ export default function Navbar() {
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
 
+                                {/* Brands */}
                                 <NavigationMenuItem>
                                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                                         <Link href="/brands" className="text-sm font-medium text-gray-700 hover:text-green-600">
@@ -154,6 +157,7 @@ export default function Navbar() {
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
 
+                                {/* Support */}
                                 <NavigationMenuItem>
                                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                                         <Link href="/support" className="flex items-center gap-1.5 text-sm font-medium text-gray-700 hover:text-green-600">
@@ -165,6 +169,7 @@ export default function Navbar() {
 
                                 {isLoggedIn ? (
                                     <>
+                                        {/* Shop */}
                                         <NavigationMenuItem>
                                             <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                                                 <Link href="/allorders" className="text-sm font-medium text-gray-700 hover:text-green-600">
@@ -173,7 +178,7 @@ export default function Navbar() {
                                             </NavigationMenuLink>
                                         </NavigationMenuItem>
 
-                                        {/* Wishlist */}
+                                        {/* Wishlist Icon */}
                                         <NavigationMenuItem>
                                             <NavigationMenuLink asChild>
                                                 <Link href="/wishlist" className="relative flex h-9 w-9 items-center justify-center rounded-full text-gray-600 transition hover:bg-red-50 hover:text-red-500">
@@ -185,7 +190,7 @@ export default function Navbar() {
                                             </NavigationMenuLink>
                                         </NavigationMenuItem>
 
-                                        {/* Cart */}
+                                        {/* Cart Icon */}
                                         <NavigationMenuItem>
                                             <NavigationMenuLink asChild>
                                                 <Link href="/cart" className="relative flex h-9 w-9 items-center justify-center rounded-full text-gray-600 transition hover:bg-green-50 hover:text-green-600">
@@ -252,7 +257,7 @@ export default function Navbar() {
                         </NavigationMenu>
                     </nav>
 
-                    {/* Mobile Right Side */}
+                    {/* Mobile Right Icons & Toggle */}
                     <div className="flex items-center gap-2 lg:hidden">
                         {isLoggedIn && (
                             <>
@@ -280,7 +285,7 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* Mobile Search bar (below header) */}
+                {/* Mobile Search Bar */}
                 <div className="border-t border-gray-100 px-4 py-2 md:hidden">
                     <div className="relative">
                         <input
@@ -295,49 +300,53 @@ export default function Navbar() {
                 </div>
             </header>
 
-            {/* Mobile Drawer */}
+            {/* Mobile Drawer - (مع dropdown للـ Categories و z-index مناسب) */}
             {mobileOpen && (
-                <div className="fixed inset-0 z-40 lg:hidden">
-                    {/* Backdrop */}
-                    <div
-                        className="absolute inset-0 bg-black/30 backdrop-blur-sm"
-                        onClick={() => setMobileOpen(false)}
-                    />
-
-                    {/* Drawer Panel */}
-                    <div className="absolute right-0 top-0 h-full w-72 overflow-y-auto bg-white shadow-2xl">
-                        {/* Drawer Header */}
+                <div className="fixed inset-0 z-50 lg:hidden">
+                    <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+                    <div className="absolute right-0 top-0 h-full w-80 overflow-y-auto bg-white shadow-2xl">
                         <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
                             <img src={logo.src} alt="FreshCart" className="h-7 w-auto" />
-                            <button
-                                onClick={() => setMobileOpen(false)}
-                                className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100"
-                            >
+                            <button onClick={() => setMobileOpen(false)} className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100">
                                 <XIcon size={18} />
                             </button>
                         </div>
-
                         <div className="px-5 py-4 space-y-1">
-                            {/* Nav Links */}
-                            {[
-                                { href: "/", label: "Home" },
-                                { href: "/categories", label: "All Categories" },
-                                { href: "/brands", label: "Brands" },
-                                { href: "/support", label: "Support" },
-                                ...(isLoggedIn ? [{ href: "/allorders", label: "Shop" }] : []),
-                            ].map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    onClick={() => setMobileOpen(false)}
-                                    className="flex items-center rounded-xl px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50 hover:text-green-600"
+                            <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center rounded-xl px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50 hover:text-green-600">
+                                Home
+                            </Link>
+                            {/* Categories Dropdown in Mobile */}
+                            <div>
+                                <button
+                                    onClick={() => setCategoriesOpen(!categoriesOpen)}
+                                    className="flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50 hover:text-green-600"
                                 >
-                                    {item.label}
+                                    <span>Categories</span>
+                                    <ChevronDownIcon size={16} className={`transition-transform duration-200 ${categoriesOpen ? "rotate-180" : ""}`} />
+                                </button>
+                                {categoriesOpen && (
+                                    <div className="mt-1 ml-4 space-y-1 border-l border-gray-200 pl-3">
+                                        {components.map((item, idx) => (
+                                            <Link key={idx} href={item.href} onClick={() => setMobileOpen(false)} className="block rounded-lg px-4 py-2 text-sm text-gray-600 transition hover:bg-green-50 hover:text-green-600">
+                                                {item.title}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                            <Link href="/brands" onClick={() => setMobileOpen(false)} className="flex items-center rounded-xl px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50 hover:text-green-600">
+                                Brands
+                            </Link>
+                            <Link href="/support" onClick={() => setMobileOpen(false)} className="flex items-center rounded-xl px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50 hover:text-green-600">
+                                Support
+                            </Link>
+                            {isLoggedIn && (
+                                <Link href="/allorders" onClick={() => setMobileOpen(false)} className="flex items-center rounded-xl px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50 hover:text-green-600">
+                                    Shop
                                 </Link>
-                            ))}
+                            )}
                         </div>
-
-                        {/* Auth Section */}
+                        {/* Auth Section (identical) */}
                         <div className="border-t border-gray-100 px-5 py-4">
                             {isLoggedIn ? (
                                 <div className="space-y-3">
@@ -351,36 +360,21 @@ export default function Navbar() {
                                             <p className="text-xs text-gray-500">{session.data?.user?.email}</p>
                                         </div>
                                     </div>
-                                    <Link
-                                        href="/account"
-                                        onClick={() => setMobileOpen(false)}
-                                        className="flex w-full items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
-                                    >
+                                    <Link href="/account" onClick={() => setMobileOpen(false)} className="flex w-full items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50">
                                         <BadgeCheckIcon size={16} className="text-green-500" />
                                         Account Settings
                                     </Link>
-                                    <button
-                                        onClick={() => { handleLogout(); setMobileOpen(false); }}
-                                        className="flex w-full items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-500 transition hover:bg-red-100"
-                                    >
+                                    <button onClick={() => { handleLogout(); setMobileOpen(false); }} className="flex w-full items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-500 transition hover:bg-red-100">
                                         <LogOutIcon size={16} />
                                         Sign Out
                                     </button>
                                 </div>
                             ) : (
                                 <div className="flex flex-col gap-2">
-                                    <Link
-                                        href="/login"
-                                        onClick={() => setMobileOpen(false)}
-                                        className="flex items-center justify-center rounded-xl border border-green-200 py-2.5 text-sm font-semibold text-green-600 transition hover:bg-green-50"
-                                    >
+                                    <Link href="/login" onClick={() => setMobileOpen(false)} className="flex items-center justify-center rounded-xl border border-green-200 py-2.5 text-sm font-semibold text-green-600 transition hover:bg-green-50">
                                         Login
                                     </Link>
-                                    <Link
-                                        href="/signin"
-                                        onClick={() => setMobileOpen(false)}
-                                        className="flex items-center justify-center rounded-xl bg-green-600 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700"
-                                    >
+                                    <Link href="/signin" onClick={() => setMobileOpen(false)} className="flex items-center justify-center rounded-xl bg-green-600 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700">
                                         Sign Up
                                     </Link>
                                 </div>
