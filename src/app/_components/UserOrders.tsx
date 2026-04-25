@@ -23,7 +23,7 @@ export default function UserOrders({ item }: { item: allProdects }) {
 
   // حساب إجمالي السعر مع الشحن
 
-  const totalWithShipping = (item?.totalOrderPrice || 0) + (item?.shippingPrice || 0);
+  const totalWithShipping = (item?.totalOrderPrice || 0)
   const statusSteps = [
     { label: "Order Placed", icon: FaReceipt, completed: true },
     { label: "Processing", icon: FaClock, completed: item?.isPaid ? true : false },
@@ -161,8 +161,8 @@ export default function UserOrders({ item }: { item: allProdects }) {
             <div className="bg-[#60A5FA] rounded-2xl p-5 w-full! border-2 border-green-100 shadow-md">
               <div className="space-y-3">
                 <div className="flex justify-between text-gray-600 text-sm">
-                  <span>Subtotal</span>
-                  <span className="font-medium">{item?.totalOrderPrice?.toLocaleString()} EGP</span>
+                  <span>Tax</span>
+                  <span className="font-medium">{item?.taxPrice?.toLocaleString()} EGP</span>
                 </div>
                 <div className="flex justify-between text-gray-600 text-sm">
                   <span>Shipping</span>
