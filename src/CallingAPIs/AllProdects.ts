@@ -377,3 +377,57 @@ export async function GerAllBrands():Promise<brands[] | null> {
     }
 }
 
+
+
+export async function sendEmailForgetPass(email:string){
+
+    try {
+        const res = await fetch(`https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords`, {
+            method: "POST",
+            body: JSON.stringify({ email }),
+            headers: { "Content-Type": "application/json" }
+        })
+        const data = await res.json()
+        return data
+
+    } catch (error) {
+        return null
+
+
+    }
+}
+export async function CodeOfForgetPass(code:string){
+
+    try {
+        const res = await fetch(`https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode`, {
+            method: "POST",
+            body: JSON.stringify({resetCode : code }),
+            headers: { "Content-Type": "application/json" }
+        })
+        const data = await res.json()
+        return data
+
+    } catch (error) {
+        return null
+
+
+    }
+}
+export async function ResetPassword(email:string , pass:string){
+
+    try {
+        const res = await fetch(`https://ecommerce.routemisr.com/api/v1/auth/resetPassword`, {
+            method: "PUT",
+            body: JSON.stringify({newPassword : pass , email}),
+            headers: { "Content-Type": "application/json" }
+        })
+        const data = await res.json()
+        return true
+
+    } catch (error) {
+        return null
+
+
+    }
+}
+

@@ -7,6 +7,7 @@ import { valuesOFLoginin } from '@/types/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LucideLogIn } from 'lucide-react'
 import { signIn } from "next-auth/react"
+import Link from 'next/link'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import * as z from "zod"
@@ -84,7 +85,7 @@ export default function FormLoginComponent() {
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor={field.name}>Password*</FieldLabel>
+              <FieldLabel className='flex justify-between items-center' htmlFor={field.name}>Password* <Link className='text-[#16A34A]' href={"/forget-password"}>Forget paswword?</Link></FieldLabel>
               <Input
                 className='
           p-2! mb-3 w-full rounded-md border bg-white px-4 py-2 text-sm shadow-sm transition-all 
