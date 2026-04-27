@@ -30,8 +30,6 @@ export default function ForgetPasswordWriteNewPass({resetEmail} : {resetEmail:st
 
         setisLoading(true)
 
-        console.log("values", values);
-
         const sendmsg = await ResetPassword(resetEmail , values.rePassword)
 
         if (sendmsg) {
@@ -49,11 +47,6 @@ export default function ForgetPasswordWriteNewPass({resetEmail} : {resetEmail:st
             toast.error("unexpected erroe",{richColors:true , position:"top-center"})
 
         }
-
-        console.log("sendmsg", sendmsg);
-
-
-
 
     }
 

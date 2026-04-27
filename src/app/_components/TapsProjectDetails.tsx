@@ -73,8 +73,6 @@ export function TapsProjectDetails({ prodect, prodectٌReview }: TapsProjectDeta
 
     const createcommit = await CreateReviewForProduct(prodect?._id, value.review, value.rating)
 
-    console.log("createcommit",createcommit);
-
     if (createcommit) {
       const latest = await GetReviewsForProduct(prodect?._id);
       if (latest) setReviews(latest);
@@ -92,13 +90,6 @@ export function TapsProjectDetails({ prodect, prodectٌReview }: TapsProjectDeta
 
 
   const [showAll, setShowAll] = useState(false);
-
-
-
-  console.log("prodectٌReview", prodectٌReview);
-
-
-
 
 
   const [activeTab, setActiveTab] = useState("details");

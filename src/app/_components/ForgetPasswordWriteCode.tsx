@@ -34,8 +34,6 @@ export default function ForgetPasswordWriteCode({ setIshiddenpass, setIshiddenCo
 
     setisLoading(true)
 
-    console.log("values", values);
-
     const sendmsg = await CodeOfForgetPass(values.code)
 
     if (sendmsg?.status == "Success") {
@@ -51,12 +49,6 @@ export default function ForgetPasswordWriteCode({ setIshiddenpass, setIshiddenCo
       setisLoading(false)
 
     }
-
-    console.log("sendmsg", sendmsg);
-
-
-
-
   }
 
   const signupscema = z.object(

@@ -144,7 +144,6 @@ export async function GerLogedUser(): Promise<AddCartType | null> {
             headers: { token: token as string }
         })
         const data = await res.json()
-        // console.log(data);
 
         return data
 
@@ -343,7 +342,6 @@ export async function GerUserOrders():Promise<allProdects[]  | null> {
     try {
         const res = await fetch(`https://ecommerce.routemisr.com/api/v1/orders/user/${id}`)
         const data = await res.json()
-        // console.log(data);
 
         return data
 
@@ -460,8 +458,6 @@ export async function GetReviewsForProduct(productId?:string) {
         const res = await fetch(`https://ecommerce.routemisr.com/api/v1/products/${productId}/reviews`)
 
         const data = await res.json()
-        console.log("productReviwesss",data);
-        
 
         return data.data
 

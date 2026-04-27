@@ -28,8 +28,6 @@ export default function ForgetPasswordWriteEmail({setResetEmail , setIshidden ,s
     async function handeldata(values: ValueTT) {
         setisLoading(true)
 
-        console.log("values", values);
-
         const sendmsg = await sendEmailForgetPass(values.email)
 
         if (sendmsg?.statusMsg=="success") {
@@ -48,11 +46,6 @@ export default function ForgetPasswordWriteEmail({setResetEmail , setIshidden ,s
             setisLoading(false)
 
         }
-
-        console.log("sendmsg",sendmsg);
-        
-
-
     }
 
     const signupscema = z.object(
