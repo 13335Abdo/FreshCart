@@ -24,8 +24,6 @@ export default async function Home() {
   const categories = await GerAllCategorys()
 
 
-const token =await  getMyToken()
-
 
   const Featured = "Featured"
   const Products = "Products"
