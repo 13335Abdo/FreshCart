@@ -44,6 +44,10 @@ import logo from "../../assets/a.shrink-0.png";
 import { AppDispatch } from "../_Redux/configStore";
 import { p } from "../_Redux/NoOfCartItemsSlice";
 import { y } from "../_Redux/NoOfWithListItems";
+import { TbLockPassword } from "react-icons/tb";
+import { FaRegHeart } from "react-icons/fa6";
+import { FaShoppingCart } from "react-icons/fa";
+import { IoWallet } from "react-icons/io5";
 
 const components: { title: string; href: string }[] = [
     { title: "All categories", href: "/categories" },
@@ -90,11 +94,10 @@ export default function Navbar() {
     return (
         <>
             <header
-                className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
-                    scrolled
+                className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${scrolled
                         ? "bg-white shadow-md"
                         : "bg-white/90 backdrop-blur-md shadow-sm"
-                }`}
+                    }`}
             >
                 <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-4 lg:px-6">
                     {/* Logo */}
@@ -103,7 +106,7 @@ export default function Navbar() {
                     </Link>
 
                     {/* Desktop Search */}
-                    <div className="relative hidden flex-1 md:flex" style={{ maxWidth: "400px" }}>
+                    <Link href={"/search"} className="relative hidden flex-1 md:flex" style={{ maxWidth: "400px" }}>
                         <input
                             type="text"
                             placeholder="Search products, brands..."
@@ -112,9 +115,9 @@ export default function Navbar() {
                         <button className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-green-500 p-1.5 text-white transition hover:bg-green-600">
                             <SearchIcon size={15} />
                         </button>
-                    </div>
+                    </Link>
 
-                    {/* Desktop Navigation - تم استعادة جميع العناصر */}
+                    {/* Desktop Navigation - بدون تغيير */}
                     <nav className="hidden lg:block">
                         <NavigationMenu>
                             <NavigationMenuList className="flex items-center gap-0.5">
@@ -216,8 +219,20 @@ export default function Navbar() {
                                                 <DropdownMenuContent className="mt-3 w-52 rounded-xl bg-white p-1.5 shadow-xl" align="end">
                                                     <DropdownMenuGroup>
                                                         <DropdownMenuItem className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                                            <BadgeCheckIcon className="mr-2 h-4 w-4 text-green-500" />
-                                                            <span>Account</span>
+                                                            <TbLockPassword className="mr-2 h-4 w-4 text-gray-500" />
+                                                            <Link href="/change-passwrd">Change password</Link>
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                                            <FaRegHeart className="mr-2 h-4 w-4 text-red-500" />
+                                                            <Link href="/wishlist">My Wishlist</Link>
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                                            <FaShoppingCart className="mr-2 h-4 w-4 text-green-500" />
+                                                            <Link href="/cart">My cart</Link>
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem className="cursor-pointer rounded-lg px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                                            <IoWallet className="mr-2 h-4 w-4 text-[#3B2F2F]" />
+                                                            <Link href="/allorders">My orders</Link>
                                                         </DropdownMenuItem>
                                                     </DropdownMenuGroup>
                                                     <div className="my-1 h-px bg-gray-100" />
@@ -287,7 +302,7 @@ export default function Navbar() {
 
                 {/* Mobile Search Bar */}
                 <div className="border-t border-gray-100 px-4 py-2 md:hidden">
-                    <div className="relative">
+                    <Link href={"/search"} className="relative">
                         <input
                             type="text"
                             placeholder="Search products, brands..."
@@ -296,11 +311,11 @@ export default function Navbar() {
                         <button className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-green-500 p-1.5 text-white transition hover:bg-green-600">
                             <SearchIcon size={15} />
                         </button>
-                    </div>
+                    </Link>
                 </div>
             </header>
 
-            {/* Mobile Drawer - (مع dropdown للـ Categories و z-index مناسب) */}
+            {/* Mobile Drawer - مُحسَّن ليشمل نفس خيارات الـ Avatar Dropdown */}
             {mobileOpen && (
                 <div className="fixed inset-0 z-50 lg:hidden">
                     <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
@@ -346,7 +361,8 @@ export default function Navbar() {
                                 </Link>
                             )}
                         </div>
-                        {/* Auth Section (identical) */}
+
+                        {/* Auth Section with same items as desktop dropdown */}
                         <div className="border-t border-gray-100 px-5 py-4">
                             {isLoggedIn ? (
                                 <div className="space-y-3">
@@ -360,21 +376,63 @@ export default function Navbar() {
                                             <p className="text-xs text-gray-500">{session.data?.user?.email}</p>
                                         </div>
                                     </div>
-                                    <Link href="/account" onClick={() => setMobileOpen(false)} className="flex w-full items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50">
-                                        <BadgeCheckIcon size={16} className="text-green-500" />
-                                        Account Settings
+
+                                    {/* إضافة نفس الخيارات الموجودة في Dropdown */}
+                                    <Link
+                                        href="/change-passwrd"
+                                        onClick={() => setMobileOpen(false)}
+                                        className="flex w-full items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50"
+                                    >
+                                        <TbLockPassword className="h-4 w-4 text-gray-500" />
+                                        Change password
                                     </Link>
-                                    <button onClick={() => { handleLogout(); setMobileOpen(false); }} className="flex w-full items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-500 transition hover:bg-red-100">
+                                    <Link
+                                        href="/wishlist"
+                                        onClick={() => setMobileOpen(false)}
+                                        className="flex w-full items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50"
+                                    >
+                                        <FaRegHeart className="h-4 w-4 text-red-500" />
+                                        My Wishlist
+                                    </Link>
+                                    <Link
+                                        href="/cart"
+                                        onClick={() => setMobileOpen(false)}
+                                        className="flex w-full items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50"
+                                    >
+                                        <FaShoppingCart className="h-4 w-4 text-green-500" />
+                                        My cart
+                                    </Link>
+                                    <Link
+                                        href="/allorders"
+                                        onClick={() => setMobileOpen(false)}
+                                        className="flex w-full items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50"
+                                    >
+                                        <IoWallet className="h-4 w-4 text-[#3B2F2F]" />
+                                        My orders
+                                    </Link>
+
+                                    <button
+                                        onClick={() => { handleLogout(); setMobileOpen(false); }}
+                                        className="flex w-full items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-medium text-red-500 transition hover:bg-red-100"
+                                    >
                                         <LogOutIcon size={16} />
                                         Sign Out
                                     </button>
                                 </div>
                             ) : (
                                 <div className="flex flex-col gap-2">
-                                    <Link href="/login" onClick={() => setMobileOpen(false)} className="flex items-center justify-center rounded-xl border border-green-200 py-2.5 text-sm font-semibold text-green-600 transition hover:bg-green-50">
+                                    <Link
+                                        href="/login"
+                                        onClick={() => setMobileOpen(false)}
+                                        className="flex items-center justify-center rounded-xl border border-green-200 py-2.5 text-sm font-semibold text-green-600 transition hover:bg-green-50"
+                                    >
                                         Login
                                     </Link>
-                                    <Link href="/signin" onClick={() => setMobileOpen(false)} className="flex items-center justify-center rounded-xl bg-green-600 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700">
+                                    <Link
+                                        href="/signin"
+                                        onClick={() => setMobileOpen(false)}
+                                        className="flex items-center justify-center rounded-xl bg-green-600 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700"
+                                    >
                                         Sign Up
                                     </Link>
                                 </div>

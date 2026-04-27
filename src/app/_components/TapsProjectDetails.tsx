@@ -1,11 +1,49 @@
 "use client";
+import { CreateReviewForProduct, GetReviewsForProduct } from "@/CallingAPIs/AllProdects";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
 import { ProdectType } from "@/types/types";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { FiStar, FiTruck } from "react-icons/fi";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
+import * as z from "zod";
+
+const scema = z.object({
+
+  review: z.string().min(5, "above 5 char"),
+  rating: z.number().min(1, "Please select a rating").max(5)
+
+})
+
+interface Valuee {
+
+  review: string,
+
+  rating: number,
+
+}
 
 interface TapsProjectDetailsProps {
   prodect?: ProdectType | null;
+  prodectٌReview: {
+
+    _id: string,
+    createdAt: string,
+    product: string,
+    rating: number,
+    review: string,
+    updatedAt: string,
+    user: {
+      name: string,
+      _id: string,
+    }
+
+  }[]
 }
 
 const keyFeatures = [
@@ -21,9 +59,49 @@ const tabs = [
   { id: "shipping", label: "Shipping & Returns", shortLabel: "Shipping", icon: "truck" },
 ];
 
-export function TapsProjectDetails({ prodect }: TapsProjectDetailsProps) {
-  const [activeTab, setActiveTab] = useState("details");
+export function TapsProjectDetails({ prodect, prodectٌReview }: TapsProjectDetailsProps) {
 
+  const [reviews, setReviews] = useState<TapsProjectDetailsProps["prodectٌReview"]>(
+    prodectٌReview ?? []
+  );
+
+  useEffect(() => {
+    setReviews(prodectٌReview ?? []);
+  }, [prodectٌReview]);
+
+  async function handeldata(value: Valuee) {
+
+    const createcommit = await CreateReviewForProduct(prodect?._id, value.review, value.rating)
+
+    console.log("createcommit",createcommit);
+
+    if (createcommit) {
+      const latest = await GetReviewsForProduct(prodect?._id);
+      if (latest) setReviews(latest);
+      form.reset({ review: "", rating: undefined });
+    }
+
+}
+
+  const form = useForm({
+    defaultValues: {
+      review: "",
+      rating: undefined,
+    }, resolver: zodResolver(scema)
+  })
+
+
+  const [showAll, setShowAll] = useState(false);
+
+
+
+  console.log("prodectٌReview", prodectٌReview);
+
+
+
+
+
+  const [activeTab, setActiveTab] = useState("details");
   return (
     <div className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
       {/* Tab bar */}
@@ -46,7 +124,7 @@ export function TapsProjectDetails({ prodect }: TapsProjectDetailsProps) {
               <span className="hidden sm:inline">{tab.label}</span>
 
               {tab.count && (
-                <span className="text-gray-400 font-normal">({prodect?.ratingsQuantity})</span>
+                <span className="text-gray-400 font-normal">({reviews.length})</span>
               )}
 
               {isActive && (
@@ -104,7 +182,7 @@ export function TapsProjectDetails({ prodect }: TapsProjectDetailsProps) {
       {activeTab === "reviews" && (
         <div className="p-4 sm:p-6 lg:p-8">
           <h2 className="text-base font-bold text-gray-900 mb-4">Customer Reviews</h2>
-          {Number(prodect?.ratingsQuantity ?? 0) > 0 ? (
+          {reviews?.length ?? 0 > 0 ? (
             <div className="flex items-center gap-4">
               <div className="text-4xl sm:text-5xl font-bold text-gray-900">
                 {prodect?.ratingsAverage}
@@ -117,13 +195,151 @@ export function TapsProjectDetails({ prodect }: TapsProjectDetailsProps) {
                   </span>
                 </div>
                 <p className="mt-1 text-sm text-gray-400">
-                  Based on {prodect?.ratingsQuantity} reviews
+                  Based on {reviews?.length} reviews
                 </p>
               </div>
             </div>
+
+
           ) : (
             <p className="text-sm text-gray-400">No reviews yet.</p>
           )}
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+
+
+            {reviews?.slice(0, showAll ? reviews.length : 5).map((review, index) => (
+              <div
+                key={index}
+                className="flex gap-4 p-5 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200 mt-4"
+              >
+                <Avatar className="w-11 h-11 shrink-0 ring-2 ring-[#28C862]/30">
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    alt={review.user.name}
+                    className="grayscale"
+                  />
+                  <AvatarFallback className="bg-[#28C862]/10 text-[#28C862] font-bold text-sm">
+                    {review.user.name?.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                    <p className="text-sm font-bold text-gray-900 truncate">
+                      {review.user.name}
+                    </p>
+                    <div className="flex items-center gap-0.5">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <svg
+                          key={star}
+                          className={`w-4 h-4 ${star <= review.rating ? "text-amber-400" : "text-gray-200"}`}
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                      <span className="ml-1 text-xs text-gray-400 font-medium">
+                        {review.rating}/5
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed wrap-break-word">
+                    {review.review}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+          {reviews?.length > 5 && (
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="w-1/2 text-center justify-center items-center m-auto flex mt-4 py-2.5 rounded-2xl border border-[#28C862] text-[#28C862] text-sm font-bold hover:bg-[#28C862] hover:text-white transition-all duration-200"
+            >
+              {showAll ? "Show Less ↑" : `Show More (${reviews.length - 5} more) ↓`}
+            </button>
+          )}
+
+
+          <form onSubmit={form.handleSubmit(handeldata)} className="mt-8 max-w-xl mx-auto">
+            <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6 shadow-sm space-y-5">
+
+              <h3 className="text-base font-extrabold text-gray-900">Leave a Review</h3>
+
+              {/* Rating Stars */}
+              <Controller
+                name="rating"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">
+                      Your Rating <span className="text-red-400">*</span>
+                    </label>
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => field.onChange(star)}
+                          className="text-3xl transition-transform hover:scale-110 focus:outline-none"
+                        >
+                          <span className={field.value >= star ? "text-amber-400" : "text-gray-200"}>
+                            ★
+                          </span>
+                        </button>
+                      ))}
+                      {field.value && (
+                        <span className="ml-2 self-center text-sm font-semibold text-gray-500">
+                          {field.value}/5
+                        </span>
+                      )}
+                    </div>
+                    {fieldState.error && (
+                      <p className="mt-1 text-xs text-red-500">Please select a rating</p>
+                    )}
+                  </div>
+                )}
+              />
+
+              {/* Review Text */}
+              <Controller
+                name="review"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2" htmlFor={field.name}>
+                      Your Comment <span className="text-red-400">*</span>
+                    </label>
+                    <textarea
+                      {...field}
+                      id={field.name}
+                      rows={4}
+                      placeholder="Share your experience with this product..."
+                      className={`w-full rounded-xl border px-4 py-3 text-sm text-gray-800 bg-white shadow-sm resize-none outline-none transition-all
+              ${fieldState.invalid
+                          ? "border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100"
+                          : "border-gray-200 focus:border-[#28C862] focus:ring-2 focus:ring-[#28C862]/10"
+                        }`}
+                    />
+                    {fieldState.error && (
+                      <p className="mt-1 text-xs text-red-500">{fieldState.error.message}</p>
+                    )}
+                  </div>
+                )}
+              />
+
+              {/* Submit */}
+              <button
+                type="submit"
+                className="w-full py-3 rounded-xl bg-[#28C862] hover:bg-[#16A34A] text-white text-sm font-extrabold transition-colors duration-200 shadow-sm hover:shadow-md"
+              >
+                Submit Review ✓
+              </button>
+
+            </div>
+          </form>
+
+
         </div>
       )}
 

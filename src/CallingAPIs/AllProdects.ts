@@ -307,12 +307,10 @@ export async function createCashOrder(values : Values,cartId:string){
 
 export async function createCardOrder(values : Values,cartId:string){
 
-    const url = process.env.LOCAL_URL
-
     const token = await getMyToken()
 
     try {
-        const res = await fetch(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${url}`, {
+        const res = await fetch(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=https://fresh-cart-teal-zeta.vercel.app`, {
             method: "POST",
             body: JSON.stringify({ values }),
             headers: { "Content-Type": "application/json", token: token as string }
@@ -413,6 +411,8 @@ export async function CodeOfForgetPass(code:string){
 
     }
 }
+
+
 export async function ResetPassword(email:string , pass:string){
 
     try {
@@ -431,3 +431,64 @@ export async function ResetPassword(email:string , pass:string){
     }
 }
 
+
+
+export async function CreateReviewForProduct(productId?:string , review?:string , rating?:number){
+
+    const token = await getMyToken()
+
+    try {
+        const res = await fetch(`https://ecommerce.routemisr.com/api/v1/products/${productId}/reviews`, {
+            method: "POST",
+            body: JSON.stringify({review , rating }),
+            headers: { "Content-Type": "application/json", token: token as string }
+        })
+        const data = await res.json()
+        return data
+
+    } catch (error) {
+        return null
+
+
+    }
+}
+
+
+
+export async function GetReviewsForProduct(productId?:string) {
+    try {
+        const res = await fetch(`https://ecommerce.routemisr.com/api/v1/products/${productId}/reviews`)
+
+        const data = await res.json()
+        console.log("productReviwesss",data);
+        
+
+        return data.data
+
+    } catch (error) {
+        return null
+
+
+    }
+}
+
+
+export async function ChangePassword(currentPassword:string , password:string , rePassword:string){
+
+    const token = await getMyToken()
+
+    try {
+        const res = await fetch(`https://ecommerce.routemisr.com/api/v1/users/changeMyPassword`, {
+            method: "PUT",
+            body: JSON.stringify({currentPassword , password , rePassword}),
+            headers: { "Content-Type": "application/json" , token: token as string }
+        })
+        const data = await res.json()
+        return data
+
+    } catch (error) {
+        return null
+
+
+    }
+}

@@ -5,7 +5,7 @@ import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Spinner } from '@/components/ui/spinner'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LucideLogIn } from 'lucide-react'
+import { CheckCircle2, LockKeyhole, LucideLogIn, ShieldCheck } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -76,10 +76,28 @@ export default function ForgetPasswordWriteNewPass({resetEmail} : {resetEmail:st
 
     return (
         <>
-            <form onSubmit={form.handleSubmit(handeldata)} action="" className='space-y-4'>
-                <div className='mb-1'>
-                    <h2 className='text-xl font-semibold text-[#1E2939] sm:text-2xl'>Create new password</h2>
-                    <p className='mt-1 text-sm text-[#6A7282]'>Choose a strong password you have not used before.</p>
+            <form onSubmit={form.handleSubmit(handeldata)} action="" className='mx-auto max-w-xl space-y-5 rounded-3xl border border-emerald-100 bg-white/95 p-5 shadow-xl shadow-emerald-100/40 sm:p-7'>
+                <div className='rounded-2xl bg-linear-to-br from-emerald-50 via-white to-green-50 p-4 sm:p-5'>
+                    <div className='mb-3 flex items-center gap-3'>
+                        <div className='rounded-xl bg-emerald-600 p-2 text-white shadow-md'>
+                            <LockKeyhole className='h-5 w-5' />
+                        </div>
+                        <div>
+                            <h2 className='text-xl font-bold text-slate-800 sm:text-2xl'>Create new password</h2>
+                            <p className='mt-1 text-sm text-slate-500'>Secure your account with a strong new password.</p>
+                        </div>
+                    </div>
+
+                    <div className='grid gap-2 text-xs text-slate-600 sm:grid-cols-2'>
+                        <p className='flex items-center gap-2 rounded-lg border border-emerald-100 bg-white px-3 py-2'>
+                            <ShieldCheck className='h-4 w-4 text-emerald-600' />
+                            At least 8 characters
+                        </p>
+                        <p className='flex items-center gap-2 rounded-lg border border-emerald-100 bg-white px-3 py-2'>
+                            <CheckCircle2 className='h-4 w-4 text-emerald-600' />
+                            Upper/lowercase, number and symbol
+                        </p>
+                    </div>
                 </div>
 
 
@@ -90,9 +108,7 @@ export default function ForgetPasswordWriteNewPass({resetEmail} : {resetEmail:st
                         <Field data-invalid={fieldState.invalid}>
                             <FieldLabel htmlFor={field.name}>New Password*</FieldLabel>
                             <Input
-                                className='
-          mb-1 h-11 w-full rounded-lg border border-gray-200! bg-white px-4 text-sm shadow-sm transition-all 
-          focus:outline-none focus:ring-2 focus:ring-transparent focus:border-green-400!'
+                                className='mb-1 h-11 w-full rounded-xl border border-gray-200! bg-white px-4 text-sm shadow-sm transition-all focus:border-emerald-400! focus:shadow focus:shadow-emerald-100'
                                 type='password'
                                 {...field}
                                 id={field.name}
@@ -111,9 +127,7 @@ export default function ForgetPasswordWriteNewPass({resetEmail} : {resetEmail:st
                         <Field data-invalid={fieldState.invalid}>
                             <FieldLabel htmlFor={field.name}>Repeat new password*</FieldLabel>
                             <Input
-                                className='
-          mb-1 h-11 w-full rounded-lg border border-gray-200! bg-white px-4 text-sm shadow-sm transition-all 
-          focus:outline-none focus:ring-2 focus:ring-transparent focus:border-green-400!'
+                                className='mb-1 h-11 w-full rounded-xl border border-gray-200! bg-white px-4 text-sm shadow-sm transition-all focus:border-emerald-400! focus:shadow focus:shadow-emerald-100'
                                 type='password'
                                 {...field}
                                 id={field.name}
@@ -131,8 +145,12 @@ export default function ForgetPasswordWriteNewPass({resetEmail} : {resetEmail:st
                 <Button disabled={isLoading} className={`h-11 w-full cursor-pointer bg-[#16A34A] py-2 text-[15px] font-semibold text-white hover:bg-[#15803D] disabled:opacity-80`}>
                     {isLoading ? <Spinner /> : ""}
                     <LucideLogIn
-                        className="me-2" /> Update password
+                        className="me-2" /> Update Password
                 </Button>
+
+                <p className='text-center text-xs text-slate-500'>
+                    After updating, you will be redirected to login.
+                </p>
 
             </form>
 

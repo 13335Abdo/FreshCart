@@ -2,10 +2,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./_components/Navbar";
-import Footer from "./_components/Footer";
 import MySesssion from "./_components/MySesssion";
 import { Toaster } from "sonner";
+import RouteChrome from "./_components/RouteChrome";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,13 +35,8 @@ export default function RootLayout({
         
 
           <MySesssion>
-            <Navbar />
             <Toaster />
-
-            {children}
-
-
-            <Footer />
+            <RouteChrome>{children}</RouteChrome>
           </MySesssion>
       </body>
 

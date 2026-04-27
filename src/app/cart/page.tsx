@@ -62,7 +62,7 @@ export default function page() {
                         </div>
 
                         {/* Order Summary — sticky on desktop */}
-                        <div className='w-full lg:w-[340px] lg:sticky lg:top-24'>
+                        <div className='w-full lg:w-85 lg:sticky lg:top-24'>
                             <OrderSummery />
                         </div>
                     </div>

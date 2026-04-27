@@ -3,7 +3,7 @@ import Design from "@/app/_components/Design";
 import MySwiper from "@/app/_components/MySwiper";
 import { TapsProjectDetails } from "@/app/_components/TapsProjectDetails";
 import TitleSections, { MatchProdects } from "@/app/_components/TitleSections";
-import { GerAllProdects, GetSpacificProdect } from "@/CallingAPIs/AllProdects";
+import { GerAllProdects, GetReviewsForProduct, GetSpacificProdect } from "@/CallingAPIs/AllProdects";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -12,6 +12,9 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
   const prodect = await GetSpacificProdect(id);
+
+  const prodectٌReview = await GetReviewsForProduct(id);
+
   const matced = await GerAllProdects();
   const AllImages = prodect?.images;
 
@@ -84,7 +87,7 @@ export default async function Page({ params }: PageProps) {
 
         {/* Tabs */}
         <div className="mt-8">
-          <TapsProjectDetails prodect={prodect} />
+          <TapsProjectDetails prodectٌReview={prodectٌReview} prodect={prodect}  />
         </div>
 
         {/* Matched Products */}
