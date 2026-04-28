@@ -37,6 +37,7 @@ import {
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import avatar from "../../assets/7be87acff8878d0ff905ef9dcd5bf7d2fd7a6c6f.png";
@@ -54,6 +55,9 @@ const components: { title: string; href: string }[] = [
 ];
 
 export default function Navbar() {
+    const pathname = usePathname();
+    const hideNavSearch = pathname === "/search";
+
     const dispatch = useDispatch<AppDispatch>();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -105,17 +109,19 @@ export default function Navbar() {
                         <img src={logo.src} alt="FreshCart" className="h-8 w-auto" />
                     </Link>
 
-                    {/* Desktop Search */}
-                    <Link href={"/search"} className="relative hidden flex-1 md:flex" style={{ maxWidth: "400px" }}>
-                        <input
-                            type="text"
-                            placeholder="Search products, brands..."
-                            className="w-full rounded-full border border-gray-200 bg-gray-50 py-2 pl-5 pr-11 text-sm transition focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
-                        />
-                        <button className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-green-500 p-1.5 text-white transition hover:bg-green-600">
-                            <SearchIcon size={15} />
-                        </button>
-                    </Link>
+                    {/* Desktop Search — hidden on /search (page has its own search) */}
+                    {!hideNavSearch && (
+                        <Link href={"/search"} className="relative hidden flex-1 md:flex" style={{ maxWidth: "400px" }}>
+                            <input
+                                type="text"
+                                placeholder="Search products, brands..."
+                                className="w-full rounded-full border border-gray-200 bg-gray-50 py-2 pl-5 pr-11 text-sm transition focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+                            />
+                            <button className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-green-500 p-1.5 text-white transition hover:bg-green-600">
+                                <SearchIcon size={15} />
+                            </button>
+                        </Link>
+                    )}
 
                     {/* Desktop Navigation - بدون تغيير */}
                     <nav className="hidden lg:block">
@@ -300,19 +306,21 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* Mobile Search Bar */}
-                <div className="border-t border-gray-100 px-4 py-2 md:hidden">
-                    <Link href={"/search"} className="relative">
-                        <input
-                            type="text"
-                            placeholder="Search products, brands..."
-                            className="w-full rounded-full border border-gray-200 bg-gray-50 py-2 pl-5 pr-11 text-sm transition focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
-                        />
-                        <button className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-green-500 p-1.5 text-white transition hover:bg-green-600">
-                            <SearchIcon size={15} />
-                        </button>
-                    </Link>
-                </div>
+                {/* Mobile Search Bar — hidden on /search */}
+                {!hideNavSearch && (
+                    <div className="border-t border-gray-100 px-4 py-2 md:hidden">
+                        <Link href={"/search"} className="relative">
+                            <input
+                                type="text"
+                                placeholder="Search products, brands..."
+                                className="w-full rounded-full border border-gray-200 bg-gray-50 py-2 pl-5 pr-11 text-sm transition focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+                            />
+                            <button className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-green-500 p-1.5 text-white transition hover:bg-green-600">
+                                <SearchIcon size={15} />
+                            </button>
+                        </Link>
+                    </div>
+                )}
             </header>
 
             {/* Mobile Drawer - مُحسَّن ليشمل نفس خيارات الـ Avatar Dropdown */}

@@ -28,7 +28,7 @@ export default function SearchProductsClient({
 
   return (
     <>
-      <div className="relative z-50 w-1/2 m-auto mt-4">
+      <div className="relative w-1/2 m-auto mt-4">
         <input
           type="text"
           value={query}
