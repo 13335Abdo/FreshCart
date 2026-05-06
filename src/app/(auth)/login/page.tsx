@@ -81,7 +81,7 @@ export default function page() {
 
 
             <div className='my-5 text-center'>
-              <p className='text-[16px] font-semibold text-[#4A5565]' >New to FreshCart? <Link className='text-[#16A34A]' href={"/signup"}>Create an account</Link></p>
+              <p className='text-[16px] font-semibold text-[#4A5565]' >New to FreshCart? <Link className='text-[#16A34A]' href={"/signin"}>Create an account</Link></p>
 
             </div>
 
